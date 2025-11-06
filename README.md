@@ -1,6 +1,6 @@
 # Advanced Guide: QEMU CPU Models for KVM Guests - Debunking the "host" CPU Model Performance Myth
 > [!NOTE]
-> This targets single node, homelab users.
+> Target audience: single-node homelab setups using AVX2-capable processors.
 
 > [!TIP]
 > Always install the latest CPU microcode for your CPU.  
