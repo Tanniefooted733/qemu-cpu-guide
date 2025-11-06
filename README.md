@@ -41,7 +41,9 @@ Select either `amd-hide-vm-for-windows` or `intel-hide-vm-for-windows` CPU model
 
 > [!TIP]
 > To run Android emulators like [MEmu](https://www.memuplay.com/) smoothly, you need to have a GPU and enable Hyper-V:
-> `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All`
+> ```
+> Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+> ```
 
 ---
 
