@@ -34,6 +34,7 @@ cpu-model: amd-hide-vm-for-windows
     hidden 1
     hv-vendor-id amd
     reported-model host
+
 cpu-model: intel-hide-vm-for-windows
     flags -hypervisor;+invtsc;+hv-frequencies;+hv-evmcs;+hv-reenlightenment;+hv-emsr-bitmap;+hv-tlbflush-direct
     phys-bits host
