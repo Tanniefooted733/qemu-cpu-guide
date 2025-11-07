@@ -15,13 +15,13 @@ For basic Windows guests without WSL2, Hyper-V, or VBS enabled, use named QEMU C
 
 ## Hyper-V, WSL2, and VBS Enabled Guests
 > [!Note]
-> When using the default `host` model in Proxmox VE, it will result in this QEMU `-cpu` argument when starting a VM:
+> When using the default `host` model in Proxmox VE, it will result in this QEMU `-cpu` argument when starting the Windows VM:
 >
 > Check with `qm show VMID --pretty`
 > ```
 > -cpu 'host,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vpindex,+kvm_pv_eoi,+kvm_pv_unhalt'
 > ```
-> This is fine as long as you don't have any of these enabled: WSL2, Hyper-V, or VBS.
+> This is fine as long as you don't have any of these enabled in your Windows VM: WSL2, Hyper-V, or VBS.
 
 ### To achieve the best performance with Hyper-V, WSL2, and VBS enabled, we need to create a custom CPU model:
 
@@ -45,7 +45,7 @@ cpu-model: intel-hide-vm-for-windows
 2. Select either `amd-hide-vm-for-windows` or `intel-hide-vm-for-windows` CPU model in the Proxmox web GUI, depending on your processor.
 
 > [!Note]
-> This will result in the following QEMU `-cpu` argument when starting the Windows VM with `intel-hide-vm-for-windows`:
+> When using these custom host CPU models, it will result in the following QEMU `-cpu` argument when starting the Windows VM:
 > ```
 > -cpu 'host,+hv-emsr-bitmap,+hv-evmcs,+hv-frequencies,+hv-reenlightenment,+hv-tlbflush-direct,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vendor_id=intel,hv_vpindex,-hypervisor,+invtsc,kvm=off,+kvm_pv_eoi,+kvm_pv_unhalt,host-phys-bits=true'
 > ```
