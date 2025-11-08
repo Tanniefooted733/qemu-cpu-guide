@@ -14,10 +14,6 @@
 
 ## Simple Windows Guests
 For basic Windows guests without WSL2, Hyper-V, or VBS enabled, use named QEMU CPU models corresponding to your hardware. For example, if you have Skylake CPUs, use `Skylake-Client-v4`.
-
----
-
-## Hyper-V, WSL2, and VBS Enabled Guests
 > [!Note]
 > Using the default `host` model in Proxmox VE will result in the following QEMU `-cpu` argument when starting the Windows VM:
 > > `qm show VMID --pretty`
@@ -25,6 +21,10 @@ For basic Windows guests without WSL2, Hyper-V, or VBS enabled, use named QEMU C
 > -cpu 'host,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vpindex,+kvm_pv_eoi,+kvm_pv_unhalt'
 > ```
 > This is fine as long as you don't have any of these enabled in your Windows VM: WSL2, Hyper-V, or VBS.
+
+---
+
+## Hyper-V, WSL2, and VBS Enabled Guests
 
 ### To achieve the best performance with Hyper-V, WSL2, and VBS enabled, we need to create a custom CPU model:
 
