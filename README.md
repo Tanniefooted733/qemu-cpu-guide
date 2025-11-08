@@ -6,6 +6,10 @@
 > Always install the latest CPU microcode for your CPU.  
 > Details: https://pve.proxmox.com/pve-docs/pve-admin-guide.html#sysadmin_firmware_cpu
 
+## References
+- [QEMU x86 CPU Models Documentation](https://www.qemu.org/docs/master/system/i386/cpu.html)
+- [QEMU Hyper-V Enlightenments Documentation](https://www.qemu.org/docs/master/system/i386/hyperv.html)
+
 ---
 
 ## Simple Windows Guests
@@ -15,9 +19,8 @@ For basic Windows guests without WSL2, Hyper-V, or VBS enabled, use named QEMU C
 
 ## Hyper-V, WSL2, and VBS Enabled Guests
 > [!Note]
-> When using the default `host` model in Proxmox VE, it will result in this QEMU `-cpu` argument when starting the Windows VM:
->
-> Check with `qm show VMID --pretty`
+> Using the default `host` model in Proxmox VE will result in the following QEMU `-cpu` argument when starting the Windows VM:
+> > `qm show VMID --pretty`
 > ```
 > -cpu 'host,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vpindex,+kvm_pv_eoi,+kvm_pv_unhalt'
 > ```
@@ -46,18 +49,19 @@ cpu-model: intel-hide-vm-for-windows
 2. Select either `amd-hide-vm-for-windows` or `intel-hide-vm-for-windows` CPU model in the Proxmox web GUI, depending on your processor.
 
 > [!Note]
-> When using these custom host CPU models, it will result in the following QEMU `-cpu` argument when starting the Windows VM:
+> Using these custom CPU models will result in the following QEMU `-cpu` argument when starting the Windows VM:
+> > `qm show VMID --pretty`
 > ```
 > -cpu 'host,+hv-emsr-bitmap,+hv-evmcs,+hv-frequencies,+hv-reenlightenment,+hv-tlbflush-direct,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vendor_id=intel,hv_vpindex,-hypervisor,+invtsc,kvm=off,+kvm_pv_eoi,+kvm_pv_unhalt,host-phys-bits=true'
 > ```
 
 > [!TIP]
-> With these custom host CPU models configured, you can now run Android emulators very smoothly inside your Windows VM.
+> With these custom CPU models configured, you can now run Android emulators very smoothly inside your Windows VM.
 > You need to have a GPU passthrough to the VM and enable Hyper-V:
 > ```
 > Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 > ```
-> Tested with [MEmu](https://www.memuplay.com/).
+> Tested with [MEmu Play](https://www.memuplay.com/).
 
 ---
 
@@ -84,7 +88,7 @@ The macOS kernel checks CPUID model and vendor during boot. When using CPU model
 
 ---
 
-## Bonus: Advanced CPU Spoofing
+## Bonus: Advanced CPU Spoofing (cosmetic purpose)
 
 <img width="1196" height="1012" alt="image" src="https://github.com/user-attachments/assets/90ebe0d4-c2be-4678-8e95-6d5102c780b5" />
 
@@ -99,7 +103,7 @@ For modern CPUs, you can spoof the reported base speed using the `tsc-frequency`
 To spoof a 10GHz CPU with the brand name "Intel Core i8-8800KS":
 
 ```
-# Using global parameters (keeps CPU model from GUI)
+# Using global parameters
 qm set <VMID> --args "-global cpu.model-id='Intel Core i8-8800KS' -global cpu.tsc-frequency=10000000000"
 ```
 
